@@ -77,11 +77,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.GITHUB_SSH_KEY }}" > ~/.ssh/github_id_rsa  # Add this line
           chmod 600 ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/github_id_rsa  # Add this line
           test -e ~/.ssh/known_hosts || ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts  # Add this line
       
       - name: Check if directory exists on EC2
         run: |
