@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  game-demo-db:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: $PROD_DB_NAME
+      POSTGRES_USER: $PROD_DB_USER
+      POSTGRES_PASSWORD: $PROD_DB_PASSWORD
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  game-demo:
+    image: node:18
+    ports:
+      - "7000:7000"
+    environment:
+      PORT: 7000
+      NODE_ENV: PROD
+      PROD_DB_HOST: game-demo-db
+      PROD_DB_PORT: 5433
+      JWT_KEY: $JWT_KEY
+      DB_DIALECT: postgresql
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run migrate && npm start"
+    depends_on:
+      - game-demo-db
+    networks:
+      - mynetwork
+
+volumes:
+  pg-data:
+
+networks:
+  mynetwork:
+    driver: bridge
