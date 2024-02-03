@@ -85,7 +85,7 @@ jobs:
       
       - name: Check if directory exists on EC2
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} '[ -d game-demo-backend/ ] && cd game-demo-backend && git pull || git clone git@github.com:Game-Demo-1/game-demo-backend.git game-demo-backend/'
+          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} '[ -d game-demo-backend/ ] && cd game-demo-backend && git pull || git@github.com:N-Pacis/game-demo-backend-1.git game-demo-backend/'
 
       - name: Create .env file
         run: |
